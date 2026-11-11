@@ -1,7 +1,10 @@
 package async07.library;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
 
 class Book {
     private final String title;
@@ -38,6 +41,11 @@ class Book {
     }
 }
 
+@FunctionalInterface
+interface BookFilter {
+    boolean filterBook(Book book);
+}
+
 class Library {
     private List<Book> books = new ArrayList<>();
 
@@ -45,10 +53,29 @@ class Library {
         books.add(book);
     }
 
+    public Map<String, List<Book>> classifyBooks(Function<Book, String> classifier){
+        Map<String, List<Book>> categorizedBooks = new HashMap<>();
+        for (Book book : books) {
+            String category = classifier.apply(book);
+            categorizedBooks.putIfAbsent(category, new ArrayList<>());
+            categorizedBooks.get(category).add(book);
+        }
+        return categorizedBooks;
+    }
+
     public void displayBooks(List<Book> bookList) {
         for (Book book : bookList) {
             System.out.println(book);
         }
+    }
+    public List<Book> filterBooks(BookFilter filter){
+        List<Book> filteredBooks = new ArrayList<>();
+        for (Book book : books) {
+            if(filter.filterBook(book)){
+                filteredBooks.add(book);
+            }
+        }
+        return filteredBooks;
     }
 }
 
@@ -67,30 +94,31 @@ public class LibraryExample {
         library.addBook(new Book("The Bell Jar", "Sylvia Plath", 1963, "Fiction"));
 
         // TODO: Uncomment and complete this section of code
-        /*
+
 
         // Find all books that are in the "Fantasy" genre (lambda expression)
         System.out.println("Fantasy books:");
-        List<Book> allFantasyBooks =
+        List<Book> allFantasyBooks = library.filterBooks(book -> book.getGenre().equals("Fantasy"));
         library.displayBooks(allFantasyBooks);
 
         // Find all books by J.R.R. Tolkien (method reference)
         System.out.println("\nBooks by J.R.R. Tolkien:");
-        List<Book> authorBooks =
+        List<Book> authorBooks = library.filterBooks(LibraryExample::authorIsTolkien);
         library.displayBooks(authorBooks);
-
         // Classify books by genre (lambda expression)
         System.out.println("\nBooks by genre:");
-        Map<String, List<Book>> booksByGenre =
+        Map<String, List<Book>> booksByGenre = library.classifyBooks(book -> book.getGenre());
         for (String key : booksByGenre.keySet())
             System.out.printf(" - %s : %s%n", key, booksByGenre.get(key));
 
         // Classify books by author (method reference)
         System.out.println("\nBooks by author:");
-        Map<String, List<Book>> booksByAuthor =
+        Map<String, List<Book>> booksByAuthor = library.classifyBooks(Book::getAuthor);
         for (String key : booksByAuthor.keySet())
             System.out.printf(" - %s : %s%n", key, booksByAuthor.get(key));
 
-        */
+    }
+    private static boolean authorIsTolkien(Book book){
+        return book.getAuthor().equals("J.R.R. Tolkien");
     }
 }

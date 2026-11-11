@@ -65,7 +65,7 @@ class Sensor<T, V> extends Device<T> implements Measurable<V>, Loggable<T, V>, S
     public void store() {
         String data = "id: %s, value: %s%n".formatted(id, value);
         try {
-            Files.writeString(Path.of("file.txt"), data, StandardOpenOption.CREATE, StandardOpenOption.APPEND);
+            Files.writeString(Path.of("assignment07/exercise01/file.txt"), data, StandardOpenOption.CREATE, StandardOpenOption.APPEND);
         } catch (IOException e) {
             System.err.println("Error while writing to file.");
         }
