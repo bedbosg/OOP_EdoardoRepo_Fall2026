@@ -1,5 +1,5 @@
 package example08.examples;
-
+/*
 import java.util.List;
 import java.util.stream.Gatherers;
 import java.util.stream.Stream;
@@ -28,3 +28,4 @@ public class GatherersExample {
         //  [1, 3, 6, 10]
     }
 }
+*/

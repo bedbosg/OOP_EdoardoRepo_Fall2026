@@ -1,6 +1,7 @@
 package async08.tournament;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 class Coach {
     private final String name;
@@ -84,5 +85,29 @@ public class Tournament {
                 new Team("White Eagles", 7, 0.55, new Coach("Carlos Mendes", 11, "Brazil"), false),
                 new Team("Orange Bulls", 8, 0.5, new Coach("Sakura Tanaka", 9, "Japan"), false)
         );
+        System.out.println("\n1. Print all coach names using method references.");
+        teams.stream()
+                .map(Team::getCoach)
+                .map(Coach::getName)
+                .forEach(System.out::println);
+
+        System.out.println("\n2. Collect all champion teams into a list using method references.");
+        List<Team> champions = teams.stream()
+                .filter(Team::isChampion)
+                .collect(Collectors.toList());
+        System.out.println(champions);
+
+        System.out.println("\n3. Print the names of teams ranked 5 or lower using lambdas.");
+        teams.stream()
+                .filter(team -> team.getRanking() <= 5)
+                .map(team -> team.getName())
+                .forEach(teamName -> System.out.println(teamName));
+        System.out.println("\n4. Collect all coaches from the USA using lambdas.");
+        List<Coach> usaCoaches = teams.stream()
+                .map(team -> team.getCoach())
+                .filter(coach -> coach.getCountry().equals("USA"))
+                .collect(Collectors.toList());
+        System.out.println(usaCoaches);
+
     }
 }
