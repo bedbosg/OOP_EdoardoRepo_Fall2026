@@ -10,6 +10,7 @@
       <sourceFolder url="file://$MODULE_DIR$/05 - Annotations/ratti_edoardo" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/06 - Nested Classes and Interfaces/ratti_edoardo" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/07 - Lambda Expressions/ratti_edoardo" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/08 - Streams - Part 1/ratti_edoardo" isTestSource="false" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
